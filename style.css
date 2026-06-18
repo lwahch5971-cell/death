@@ -1,0 +1,290 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+
+    background:#000;
+
+    overflow:hidden;
+
+    font-family:'Cairo',sans-serif;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+}
+
+/* طبقة التعتيم */
+
+.overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(255,255,255,0.03),
+        rgba(0,0,0,0.95)
+    );
+
+    pointer-events:none;
+
+}
+
+/* الغبار المتحرك */
+
+#particles{
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+}
+
+.particle{
+
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    background:rgba(255,255,255,0.4);
+
+    border-radius:50%;
+
+    animation:float linear infinite;
+
+}
+
+@keyframes float{
+
+    from{
+
+        transform:
+        translateY(110vh);
+
+        opacity:0;
+
+    }
+
+    10%{
+
+        opacity:0.4;
+
+    }
+
+    90%{
+
+        opacity:0.4;
+
+    }
+
+    to{
+
+        transform:
+        translateY(-10vh);
+
+        opacity:0;
+
+    }
+
+}
+
+/* الحاوية الرئيسية */
+
+.container{
+
+    position:relative;
+
+    width:90%;
+
+    max-width:1000px;
+
+    text-align:center;
+
+    z-index:10;
+
+}
+
+/* النصوص الأساسية */
+
+#dateText,
+#deathText,
+#journeyText,
+#endText,
+#thanksText{
+
+    opacity:0;
+
+    transition:
+    opacity 3s ease,
+    transform 3s ease;
+
+    transform:translateY(15px);
+
+}
+
+/* إظهار */
+
+.show{
+
+    opacity:1 !important;
+
+    transform:translateY(0) !important;
+
+}
+
+/* التاريخ */
+
+#dateText{
+
+    font-size:clamp(1.2rem,3vw,2rem);
+
+    font-weight:300;
+
+    letter-spacing:2px;
+
+    color:rgba(255,255,255,0.75);
+
+}
+
+/* عبارة الوفاة */
+
+#deathText{
+
+    margin-top:25px;
+
+    font-size:clamp(2.5rem,7vw,6rem);
+
+    font-weight:700;
+
+    color:white;
+
+    text-shadow:
+    0 0 15px rgba(255,255,255,0.15);
+
+}
+
+/* انتهت الرحلة */
+
+#journeyText{
+
+    margin-top:30px;
+
+    font-size:clamp(1rem,2vw,1.5rem);
+
+    color:rgba(255,255,255,0.55);
+
+}
+
+/* انتهى السجل */
+
+#endText{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-180px;
+
+    transform:
+    translateX(-50%);
+
+    font-size:1.2rem;
+
+    color:rgba(255,255,255,0.5);
+
+}
+
+/* الشكر */
+
+#thanksText{
+
+    position:absolute;
+
+    left:50%;
+
+    top:160px;
+
+    transform:
+    translateX(-50%);
+
+    font-size:1rem;
+
+    color:rgba(255,255,255,0.45);
+
+}
+
+/* وميض خفيف للنص الرئيسي */
+
+@keyframes breathe{
+
+    0%{
+
+        text-shadow:
+        0 0 10px rgba(255,255,255,0.08);
+
+    }
+
+    50%{
+
+        text-shadow:
+        0 0 30px rgba(255,255,255,0.18);
+
+    }
+
+    100%{
+
+        text-shadow:
+        0 0 10px rgba(255,255,255,0.08);
+
+    }
+
+}
+
+#deathText.show{
+
+    animation:
+    breathe 6s infinite;
+
+}
+
+/* الهاتف */
+
+@media(max-width:768px){
+
+    #deathText{
+
+        line-height:1.4;
+
+    }
+
+    #thanksText{
+
+        top:120px;
+
+        width:90%;
+
+    }
+
+}
