@@ -16,45 +16,79 @@
 
 <body>
 
-<div id="particles"></div>
+<!-- شاشة الاختراق -->
+
+<div id="bootScreen">
+
+<div class="bootText">
+
+<div class="line">جارٍ الوصول إلى الجهاز...</div>
+
+<div class="line hidden">تجاوز التشفير...</div>
+
+<div class="line hidden">تم العثور على سجل محذوف.</div>
+
+</div>
+
+</div>
+
+<!-- زر التشغيل -->
+
+<div id="startScreen" class="hidden">
+
+<h1>السجل الأخير</h1>
+
+<button id="startBtn">
+
+▶ تشغيل السجل الأخير
+
+</button>
+
+</div>
+
+<!-- الفضاء -->
+
+<div id="spaceScene" class="hidden">
+
+<div id="stars"></div>
 
 <div class="overlay"></div>
 
-<div class="container">
+<div class="content">
 
-<div id="dateText" class="hidden">
+<div id="dateText"></div>
 
-في السابع من شهر مايو سنة 2341...
-
-</div>
-
-<div id="deathText" class="hidden">
-
-مات أوليفر.
-
-</div>
-
-<div id="journeyText" class="hidden">
-
-انتهت الرحلة.
-
-</div>
-
-<div id="endText" class="hidden">
-
-انتهى السجل.
-
-</div>
-
-<div id="thanksText" class="hidden">
-
-شكراً لأنك رافقته حتى النهاية.
+<div id="deathText"></div>
 
 </div>
 
 </div>
 
-<audio id="music" autoplay>
+<!-- تشويش النهاية -->
+
+<div id="endGlitch" class="hidden">
+
+<div class="endLine">
+
+ARCHIVE CLOSED
+
+</div>
+
+<div class="endLine">
+
+CONNECTION LOST
+
+</div>
+
+<div class="endLine">
+
+SIGNAL TERMINATED
+
+</div>
+
+</div>
+
+<audio id="audio">
 
 <source src="oliver-theme.mp3" type="audio/mpeg">
 
