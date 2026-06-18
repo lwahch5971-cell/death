@@ -1,117 +1,227 @@
-const music = document.getElementById("music");
+const bootScreen = document.getElementById("bootScreen");
+const startScreen = document.getElementById("startScreen");
+const startBtn = document.getElementById("startBtn");
+
+const spaceScene = document.getElementById("spaceScene");
 
 const dateText = document.getElementById("dateText");
 const deathText = document.getElementById("deathText");
-const journeyText = document.getElementById("journeyText");
-const endText = document.getElementById("endText");
-const thanksText = document.getElementById("thanksText");
 
-const particlesContainer =
-document.getElementById("particles");
+const endGlitch = document.getElementById("endGlitch");
+
+const audio = document.getElementById("audio");
 
 /* =========================
-   إنشاء الغبار المتحرك
+   نجوم الفضاء
 ========================= */
 
-for(let i = 0; i < 80; i++){
+const stars = document.getElementById("stars");
 
-    const particle =
-    document.createElement("div");
+for(let i = 0; i < 250; i++){
 
-    particle.classList.add("particle");
+    const star = document.createElement("div");
 
-    particle.style.left =
-    Math.random() * 100 + "%";
+    star.classList.add("star");
 
-    particle.style.animationDuration =
-    (10 + Math.random() * 20) + "s";
+    const size = Math.random() * 3 + 1;
 
-    particle.style.animationDelay =
-    Math.random() * 10 + "s";
+    star.style.width = size + "px";
+    star.style.height = size + "px";
 
-    particle.style.opacity =
-    Math.random() * 0.5;
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
 
-    particlesContainer.appendChild(particle);
+    star.style.animationDuration =
+    (2 + Math.random() * 6) + "s";
+
+    stars.appendChild(star);
 
 }
 
 /* =========================
-   تشغيل الموسيقى
+   شاشة الاختراق
 ========================= */
 
-window.addEventListener("load", () => {
+const lines =
+document.querySelectorAll(".line");
 
-    music.volume = 1;
+setTimeout(() => {
 
-    music.play().catch(() => {
+    lines[1].classList.remove("hidden");
 
-        console.log(
-        "المتصفح منع التشغيل التلقائي"
-        );
+}, 1200);
 
-    });
+setTimeout(() => {
+
+    lines[2].classList.remove("hidden");
+
+}, 2500);
+
+setTimeout(() => {
+
+    bootScreen.classList.add("hidden");
+
+    startScreen.classList.remove("hidden");
+
+}, 4500);
+
+/* =========================
+   تشغيل السجل
+========================= */
+
+startBtn.addEventListener("click", () => {
+
+    startScreen.classList.add("hidden");
+
+    spaceScene.classList.remove("hidden");
+
+    audio.play();
 
 });
 
 /* =========================
-   التوقيتات السينمائية
+   الكتابة التدريجية
 ========================= */
 
-/* الثانية 8 */
+function typeWriter(element, text, duration){
 
-setTimeout(() => {
+    element.textContent = "";
 
-    dateText.classList.add("show");
+    let index = 0;
 
-}, 8000);
+    const speed =
+    duration / text.length;
 
-/* الثانية 11 */
+    const interval = setInterval(() => {
 
-setTimeout(() => {
+        element.textContent += text[index];
 
-    deathText.classList.add("show");
+        index++;
 
-}, 11000);
+        if(index >= text.length){
 
-/* الثانية 20 */
+            clearInterval(interval);
 
-setTimeout(() => {
+        }
 
-    dateText.style.opacity = "0";
+    }, speed);
 
-}, 20000);
+}
 
-/* الثانية 24 */
+/* =========================
+   التزامن مع الصوت
+========================= */
 
-setTimeout(() => {
+let dateStarted = false;
+let deathStarted = false;
+let endingStarted = false;
 
-    journeyText.classList.add("show");
+audio.addEventListener("timeupdate", () => {
 
-}, 24000);
+    const t = audio.currentTime;
 
-/* الثانية 28 */
+    /* الجملة الأولى */
 
-setTimeout(() => {
+    if(t >= 2 && !dateStarted){
 
-    journeyText.style.opacity = "0";
+        dateStarted = true;
 
-    endText.classList.add("show");
+        typeWriter(
 
-}, 28000);
+            dateText,
 
-/* الثانية 31 */
+            "في السابع من شهر مايو سنة 2341...",
 
-setTimeout(() => {
+            6000
 
-    thanksText.classList.add("show");
+        );
 
-}, 31000);
+    }
 
-/* الثانية 33 */
+    /* الجملة الثانية */
 
-setTimeout(() => {
+    if(t >= 9 && !deathStarted){
 
-    thanksText.style.opacity = "0";
+        deathStarted = true;
 
-}, 33000);
+        typeWriter(
+
+            deathText,
+
+            "مات أوليفر.",
+
+            3000
+
+        );
+
+        document.body.classList.add("flash");
+
+        setTimeout(() => {
+
+            document.body.classList.remove("flash");
+
+        },300);
+
+    }
+
+});
+
+/* =========================
+   نهاية التسجيل
+========================= */
+
+audio.addEventListener("ended", () => {
+
+    if(endingStarted) return;
+
+    endingStarted = true;
+
+    spaceScene.style.opacity = "0";
+
+    setTimeout(() => {
+
+        spaceScene.classList.add("hidden");
+
+        endGlitch.classList.remove("hidden");
+
+    },1000);
+
+    setTimeout(() => {
+
+        endGlitch.innerHTML = `
+        <div class="endLine">
+        ARCHIVE CLOSED
+        </div>
+        `;
+
+    },1500);
+
+    setTimeout(() => {
+
+        endGlitch.innerHTML = `
+        <div class="endLine">
+        CONNECTION LOST
+        </div>
+        `;
+
+    },3000);
+
+    setTimeout(() => {
+
+        endGlitch.innerHTML = `
+        <div class="endLine">
+        SIGNAL TERMINATED
+        </div>
+        `;
+
+    },4500);
+
+    setTimeout(() => {
+
+        document.body.innerHTML = "";
+
+        document.body.style.background = "black";
+
+    },7000);
+
+});
